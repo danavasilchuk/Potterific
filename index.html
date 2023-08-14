@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Harry Potter Character Info</title>
+  <style>
+    th, td {
+      padding: 8px;
+      text-align: left;
+      border-bottom: 1px solid #ddd;
+    }
+    th {
+      background-color: #f2f2f2;
+    }
+    .house-buttons {
+      margin: 10px 0;
+    }
+  </style>
+</head>
+
+<body>
+
+  <h1>Harry Potter Character Info</h1>
+
+  <div class="house-buttons">
+    <!-- House buttons will be added here -->
+  </div>
+
+  <table>
+    <thead>
+      <tr>
+        <th>Name</th>
+        <th>House</th>
+        <th>Species</th>
+        <th>Gender</th>
+      </tr>
+    </thead>
+    <tbody>
+      <!-- Your code here -->
+    </tbody>
+  </table>
+
+  <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+  <script>
+    $(document).ready(function () {
+      const characters = [
+        { name: 'Harry Potter', house: 'Gryffindor', species: 'human', gender: 'male' },
+        { name: 'Hermione Granger', house: 'Gryffindor', species: 'human', gender: 'female' },
+        { name: 'Ron Weasley', house: 'Gryffindor', species: 'human', gender: 'male' },
+        { name: 'Luna Lovegood', house: 'Ravenclaw', species: 'human', gender: 'female' },
+        // Add more characters if needed
+      ];
+
+      // Display character info in table rows
+      const $tbody = $('tbody');
+      characters.forEach(function (character) {
+        $tbody.append(`<tr><td>${character.name}</td><td>${character.house}</td><td>${character.species}</td><td>${character.gender}</td></tr>`);
+      });
+
+      // Create house buttons and enable filtering
+      const uniqueHouses = [...new Set(characters.map(character => character.house))];
+      const $houseButtons = $('.house-buttons');
+      uniqueHouses.forEach(function (house) {
+        $houseButtons.append(`<button class="house-btn" data-house="${house}">${house}</button>`);
+      });
+
+      // Filter table rows by house
+      $('.house-btn').on('click', function () {
+        const house = $(this).data('house');
+        $('tbody tr').hide().filter(`:contains("${house}")`).show();
+      });
+
+      // Reset button to show all rows
+      $houseButtons.append(`<button class="reset-btn">Reset</button>`);
+      $('.reset-btn').on('click', function () {
+        $('tbody tr').show();
+      });
+
+      // Keep table column headers visible
+      $('thead').css('position', 'sticky').css('top', 0);
+    });
+  </script>
+</body>
+
+</html>
